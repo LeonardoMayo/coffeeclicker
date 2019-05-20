@@ -46,6 +46,20 @@ public class ClickerFragment extends Fragment {
 
         displayCurrentDateAtTop((TextView) view.findViewById(R.id.dateTextView));
 
+        final Button testButton = view.findViewById(R.id.testButton);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (testButton.getText().equals("Write")){
+                    // write test data
+                    ((MainActivity) getActivity()).writeDataToFile();
+                } else {
+                    //read test data
+                    ((MainActivity) getActivity()).readDateFromFile();
+                }
+            }
+        });
+
         return view;
     }
 
