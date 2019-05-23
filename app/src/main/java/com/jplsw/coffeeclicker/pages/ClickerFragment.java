@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.jplsw.coffeeclicker.MainActivity;
 import com.jplsw.coffeeclicker.R;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -53,9 +55,15 @@ public class ClickerFragment extends Fragment {
                 if (testButton.getText().equals("Write")){
                     // write test data
                     ((MainActivity) getActivity()).writeDataToFile();
+                    testButton.setText("Read");
                 } else {
                     //read test data
-                    ((MainActivity) getActivity()).readDateFromFile();
+                    try {
+                        ((MainActivity) getActivity()).readDateFromFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    testButton.setText("Write");
                 }
             }
         });

@@ -15,8 +15,13 @@ import com.jplsw.coffeeclicker.pages.ClickerFragment;
 import com.jplsw.coffeeclicker.pages.GraphFragment;
 import com.jplsw.coffeeclicker.pages.StatsFragment;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,25 +68,42 @@ public class MainActivity extends AppCompatActivity {
                 for (Statistic stat :
                         data) {
                     outputStream.write(stat.toString().getBytes());
+                    Log.d(TAG, "writeDataToFile: " + stat.toString());
                 }
 
             }
-            Statistic current = new Statistic(20190520, coffeeCount, energyCount);
+            Statistic current = new Statistic(20190523, coffeeCount, energyCount);
             outputStream.write(current.toString().getBytes());
-            outputStream.write(current.toString().getBytes());
+            Log.d(TAG, "writeDataToFile: " + current.toString());
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void readDateFromFile() {
+    public void readDateFromFile() throws IOException {
         Log.d(TAG, "readDateFromFile() called");
 
         File directory = this.getFilesDir();
         File file = new File(directory, FILENAME);
 
-        Log.d(TAG, "readDateFromFile: file: " + file.toString());
+        //Read text from file
+        StringBuilder text = new StringBuilder();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+            br.close();
+        }
+        catch (IOException e) {
+            //You'll need to add proper error handling here
+        }
+        Log.d(TAG, "readDateFromFile: file: " + text.toString());
     }
 
     /**
