@@ -22,10 +22,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.jplsw.coffeeclicker.common.Constants.*;
 
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static int coffeeCount;
     private static int energyCount;
+
+    private static String currentDate;
 
     private List<Statistic> data;
 
@@ -48,8 +52,18 @@ public class MainActivity extends AppCompatActivity {
         energyCount = 0;
         data = new ArrayList<>();
 
+        retrieveCurrentDate();
+
         ViewPager mainViewPager = (ViewPager) findViewById(R.id.mainViewPager);
         mainViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+    }
+
+    private void retrieveCurrentDate() {
+        Log.d(TAG, "retrieveCurrentDate() called");
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("dd / MM / yyyy ", Locale.US);
+        currentDate = mdformat.format(calendar.getTime());
     }
 
     /**
@@ -122,9 +136,23 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "addEnergyDrink: energyCount " + energyCount);
     }
 
+
     /**
      * Getter and Setter
      */
+
+
+    public List<Statistic> getData() {
+        return data;
+    }
+
+    public void setData(List<Statistic> data) {
+        this.data = data;
+    }
+
+    public static String getCurrentDate() {
+        return currentDate;
+    }
 
     public static int getCoffeeCount() {
         return coffeeCount;

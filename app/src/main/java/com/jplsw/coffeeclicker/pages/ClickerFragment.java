@@ -73,8 +73,7 @@ public class ClickerFragment extends Fragment {
 
     private void displayCurrentDateAtTop(TextView text) {
 
-        Date currentdate = Calendar.getInstance().getTime();
-        text.setText("Today, " + currentdate.toString());
+        text.setText("Today, " + ((MainActivity) getActivity()).getCurrentDate() );
 
     }
 }
